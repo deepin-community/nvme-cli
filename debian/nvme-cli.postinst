@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+case "${1}" in
+	configure)
+		if [ ! -s /etc/nvme/hostnqn ]
+		then
+			nvme gen-hostnqn > /etc/nvme/hostnqn
+		fi
+
+		if [ ! -s /etc/nvme/hostid ]
+		then
+			uuidgen > /etc/nvme/hostid
+		fi
+		;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+
+		;;
+
+	*)
+		echo "postinst called with unknown argument \`${1}'" >&2
+		exit 1
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0
