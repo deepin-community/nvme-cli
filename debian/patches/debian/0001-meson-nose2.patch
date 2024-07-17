@@ -1,0 +1,15 @@
+Author: Daniel Baumann <daniel.baumann@progress-linux.org>
+Description: Updating meson to find /usr/bin/nose2-3 (python3).
+
+diff -Naurp nvme-cli.orig/tests/meson.build nvme-cli/tests/meson.build
+--- nvme-cli.orig/tests/meson.build
++++ nvme-cli/tests/meson.build
+@@ -31,7 +31,7 @@ tests = [
+   'nvme_ctrl_reset_test.py',
+ ]
+
+-runtests = find_program('nose2', required : false)
++runtests = find_program('nose2-3', required : false)
+
+ if meson.version().version_compare('>= 0.56')
+     nvmecli_path = meson.project_build_root()

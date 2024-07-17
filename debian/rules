@@ -1,4 +1,17 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh ${@} --buildsystem=meson
+
+override_dh_auto_configure:
+	dh_auto_configure -- -Ddocs=man -Ddocs-build=true
+
+execute_after_dh_auto_install:
+	# removing unused files
+	rm -rf debian/nvme-cli/usr/lib/dracut
+
+	# fix wrong-manual-section
+	sed -i -e 's|\\" "1"|" "1"|' debian/nvme-cli/usr/share/man/*/*.1
+
+override_dh_auto_test:
+	# disabled, requires a NVMe device
